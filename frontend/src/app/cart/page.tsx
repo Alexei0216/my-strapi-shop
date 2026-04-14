@@ -8,31 +8,38 @@ export default function CartPage() {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Cart</h1>
+    <div className="cart-content">
+      <h2 className="cart-title">Cart</h2>
 
       {cart.length === 0 && <p>Cart is empty</p>}
 
       {cart.map((item) => (
-        <div
-          key={item.id}
-          style={{
-            borderBottom: "1px solid #eee",
-            padding: "10px 0",
-          }}
-        >
-          <h3>{item.name}</h3>
-          <p>
-            {item.price} ₽ × {item.quantity}
-          </p>
+        <div className="cart-item" key={item.id}>
+          {item.image?.url && (
+            <img
+              className="cart-item-image"
+              src={`http://localhost:1337${item.image.url}`}
+              alt={item.name}
+            />
+          )}
 
-          <button onClick={() => removeFromCart(item.id)}>Remove</button>
+          <div className="cart-item-info">
+            <h3>{item.name}</h3>
+            <p>
+              {item.price} $ x {item.quantity}
+            </p>
+          </div>
+
+          <button
+            className="cart-item-button"
+            onClick={() => removeFromCart(item.id)}
+          >
+            Remove
+          </button>
         </div>
       ))}
 
-      {cart.length > 0 && (
-        <h2 style={{ marginTop: "20px" }}>Total: {total} ₽</h2>
-      )}
+      {cart.length > 0 && <h2 className="cart-total">Total: {total} $</h2>}
     </div>
   );
 }
